@@ -22,7 +22,7 @@ class DatabaseSeeder extends Seeder
         ]);
  
         // crear 20 posts de prueba
-        \App\Models\Brand::factory(50)->create();
+        \App\Models\Brand::factory(150)->create();
 
     }
 }
