@@ -17,6 +17,8 @@ class BrandController extends Controller
      */
     public function index()
     {
+        // Para cambiar los datos a mostrar en la coleccion, 
+        // ver archivo de BrandResource
         return BrandResource::collection(Brand::latest()->paginate());
     }
 
