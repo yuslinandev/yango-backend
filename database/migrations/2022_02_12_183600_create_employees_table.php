@@ -26,11 +26,12 @@ class CreateEmployeesTable extends Migration
             $table->smallInteger('id_employee_job')->nullable();
             $table->integer('id_warehouse_assigned')->nullable();
             $table->integer('id_local_assigned')->nullable();
-            $table->string('state', 5);
+            $table->string('state', 5)->default('A');
             $table->smallInteger('user_creation');
-            $table->dateTime('created_at', 6);
+            //$table->dateTime('created_at', 6);
             $table->smallInteger('user_edit')->nullable();
-            $table->dateTime('updated_at', 6)->nullable();
+            $table->timestamps();
+            //$table->dateTime('updated_at', 6)->nullable();
         });
     }
 

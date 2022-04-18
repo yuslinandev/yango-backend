@@ -21,8 +21,11 @@ class DatabaseSeeder extends Seeder
             'password' => bcrypt('doko2021')
         ]);
  
-        // crear 20 posts de prueba
+        // crear 150 posts de prueba
         \App\Models\Brand::factory(150)->create();
+
+        // crear 10 posts de prueba
+        \App\Models\Employee::factory(10)->create();
 
     }
 }
