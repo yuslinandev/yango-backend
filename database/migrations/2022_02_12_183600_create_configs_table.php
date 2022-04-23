@@ -20,11 +20,12 @@ class CreateConfigsTable extends Migration
             $table->string('field', 50)->nullable();
             $table->string('alp_num_value', 50)->nullable();
             $table->decimal('num_value', 14, 4)->nullable();
-            $table->string('state', 5)->nullable();
+            $table->string('state', 5)->default('A');
             $table->dateTime('validity_date_start', 6)->nullable();
             $table->dateTime('validity_date_end', 6)->nullable();
             $table->integer('order_number')->nullable();
-
+            $table->timestamps();
+            
             $table->index(['table', 'code'], 'idx_config_1');
         });
     }

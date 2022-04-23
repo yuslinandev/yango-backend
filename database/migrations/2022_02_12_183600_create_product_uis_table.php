@@ -20,9 +20,8 @@ class CreateProductUisTable extends Migration
             $table->string('unique_identifier_code', 50)->nullable();
             $table->string('serie_number', 50)->nullable();
             $table->smallInteger('user_creation');
-            $table->dateTime('created_at', 6);
             $table->smallInteger('user_edit')->nullable();
-            $table->dateTime('updated_at', 6)->nullable();
+            $table->timestamps();
         });
     }
 

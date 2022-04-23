@@ -22,11 +22,10 @@ class CreateVehiclesTable extends Migration
             $table->string('type_vehicle', 5);
             $table->tinyInteger('passenger_capacity')->nullable();
             $table->smallInteger('load_capacity_kg')->nullable();
-            $table->string('state', 5);
+            $table->string('state', 5)->default('A');
             $table->smallInteger('user_creation');
-            $table->dateTime('created_at', 6);
             $table->smallInteger('user_edit')->nullable();
-            $table->dateTime('updated_at', 6)->nullable();
+            $table->timestamps();
         });
     }
 

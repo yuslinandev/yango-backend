@@ -28,11 +28,10 @@ class CreateRoutesTable extends Migration
             $table->char('weekday_scheduled', 1)->nullable();
             $table->string('time_scheduled', 10)->nullable();
             $table->integer('id_route_base')->nullable();
-            $table->string('state', 5);
+            $table->string('state', 5)->default('A');
             $table->smallInteger('user_creation');
-            $table->dateTime('created_at', 6);
             $table->smallInteger('user_edit')->nullable();
-            $table->dateTime('updated_at', 6)->nullable();
+            $table->timestamps();
         });
     }
 

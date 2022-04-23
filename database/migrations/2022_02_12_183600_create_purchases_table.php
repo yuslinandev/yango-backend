@@ -30,11 +30,10 @@ class CreatePurchasesTable extends Migration
             $table->string('currency', 5)->nullable();
             $table->decimal('exchange_rate', 10, 4)->nullable();
             $table->integer('id_local_buy')->nullable();
-            $table->string('state', 5)->nullable();
-            $table->smallInteger('user_creation')->nullable();
-            $table->dateTime('created_at', 6)->nullable();
+            $table->string('state', 5)->default('A');
+            $table->smallInteger('user_creation');
             $table->smallInteger('user_edit')->nullable();
-            $table->dateTime('updated_at', 6)->nullable();
+            $table->timestamps();
         });
     }
 

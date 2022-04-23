@@ -24,11 +24,10 @@ class CreateProductLotsTable extends Migration
             $table->dateTime('production_date', 6)->nullable();
             $table->dateTime('buy_date', 6)->nullable();
             $table->dateTime('expiration_date', 6)->nullable();
-            $table->string('state', 5);
+            $table->string('state', 5)->default('A');
             $table->smallInteger('user_creation');
-            $table->dateTime('created_at', 6);
             $table->smallInteger('user_edit')->nullable();
-            $table->dateTime('updated_at', 6)->nullable();
+            $table->timestamps();
         });
     }
 

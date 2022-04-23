@@ -32,11 +32,10 @@ class CreateSalesTable extends Migration
             $table->integer('id_local_sell')->nullable();
             $table->integer('id_warehouse_sell')->nullable();
             $table->char('reserve', 1)->nullable();
-            $table->string('state', 5)->nullable();
-            $table->smallInteger('user_creation')->nullable();
-            $table->dateTime('created_at', 6)->nullable();
+            $table->string('state', 5)->default('A');
+            $table->smallInteger('user_creation');
             $table->smallInteger('user_edit')->nullable();
-            $table->dateTime('updated_at', 6)->nullable();
+            $table->timestamps();
         });
     }
 

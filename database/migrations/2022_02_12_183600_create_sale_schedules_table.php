@@ -19,11 +19,10 @@ class CreateSaleSchedulesTable extends Migration
             $table->tinyInteger('fee_number');
             $table->decimal('value', 14, 4);
             $table->dateTime('date_scheduled', 6);
-            $table->string('state', 5);
+            $table->string('state', 5)->default('A');
             $table->smallInteger('user_creation');
-            $table->dateTime('created_at', 6);
-            $table->smallInteger('user_edit');
-            $table->dateTime('updated_at', 6);
+            $table->smallInteger('user_edit')->nullable();
+            $table->timestamps();
         });
     }
 

@@ -25,9 +25,9 @@ class CreateDeliveryPointsTable extends Migration
             $table->integer('id_ubigeo')->nullable();
             $table->string('state', 5);
             $table->smallInteger('user_creation');
-            $table->dateTime('created_at', 6);
             $table->smallInteger('user_edit')->nullable();
-            $table->dateTime('updated_at', 6)->nullable();
+            //$table->dateTime('updated_at', 6)->nullable();
+            $table->timestamps();
         });
     }
 

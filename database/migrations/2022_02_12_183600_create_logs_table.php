@@ -21,7 +21,7 @@ class CreateLogsTable extends Migration
             $table->string('previous_value', 50);
             $table->string('new_value', 50);
             $table->smallInteger('user_edit');
-            $table->dateTime('updated_at', 6);
+            $table->timestamps();
         });
     }
 

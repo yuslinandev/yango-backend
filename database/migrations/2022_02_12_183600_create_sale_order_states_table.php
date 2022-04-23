@@ -18,11 +18,10 @@ class CreateSaleOrderStatesTable extends Migration
             $table->integer('id_sale_order');
             $table->string('state_sale_order', 5);
             $table->char('current', 1);
-            $table->string('state', 5);
+            $table->string('state', 5)->default('A');
             $table->smallInteger('user_creation');
-            $table->dateTime('created_at', 6);
             $table->smallInteger('user_edit')->nullable();
-            $table->dateTime('updated_at', 6)->nullable();
+            $table->timestamps();
         });
     }
 

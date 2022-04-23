@@ -17,11 +17,10 @@ class CreatePurchaseMovementDetailsTable extends Migration
             $table->integer('id_purchase_movement_detail', true);
             $table->integer('id_purchase_detail')->nullable();
             $table->integer('id_movement_detail')->nullable();
-            $table->string('state', 5)->nullable();
-            $table->smallInteger('user_creation')->nullable();
-            $table->dateTime('created_at', 6)->nullable();
+            $table->string('state', 5)->default('A');
+            $table->smallInteger('user_creation');
             $table->smallInteger('user_edit')->nullable();
-            $table->dateTime('updated_at', 6)->nullable();
+            $table->timestamps();
         });
     }
 

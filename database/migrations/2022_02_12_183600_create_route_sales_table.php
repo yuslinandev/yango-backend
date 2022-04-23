@@ -17,11 +17,10 @@ class CreateRouteSalesTable extends Migration
             $table->integer('id_route_sale', true);
             $table->integer('id_route');
             $table->integer('id_sale');
-            $table->string('state', 5);
+            $table->string('state', 5)->default('A');
             $table->smallInteger('user_creation');
-            $table->dateTime('created_at', 6);
-            $table->smallInteger('user_edit');
-            $table->dateTime('updated_at', 6);
+            $table->smallInteger('user_edit')->nullable();
+            $table->timestamps();
         });
     }
 

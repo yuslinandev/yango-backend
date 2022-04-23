@@ -19,11 +19,10 @@ class CreatePersonLocalsTable extends Migration
             $table->string('description', 100)->nullable();
             $table->string('address', 500)->nullable();
             $table->integer('id_ubigeo')->nullable();
-            $table->string('state', 5);
+            $table->string('state', 5)->default('A');
             $table->smallInteger('user_creation');
-            $table->dateTime('created_at', 6);
             $table->smallInteger('user_edit')->nullable();
-            $table->dateTime('updated_at', 6)->nullable();
+            $table->timestamps();
         });
     }
 
