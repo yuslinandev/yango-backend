@@ -20,7 +20,7 @@ class CreateFormulaDetailsTable extends Migration
             $table->integer('id_unit');
             $table->decimal('quantity', 14, 4);
             $table->string('commentary', 200)->nullable();
-            $table->string('state', 5);
+            $table->string('state', 5)->default('A');
         });
     }
 

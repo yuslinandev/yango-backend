@@ -23,11 +23,10 @@ class CreateProductPricesTable extends Migration
             $table->decimal('price', 14, 4);
             $table->dateTime('validity_date_start', 6);
             $table->dateTime('validity_date_end', 6);
-            $table->string('state', 5);
+            $table->string('state', 5)->default('A');
             $table->smallInteger('user_creation');
-            $table->dateTime('created_at', 6);
             $table->smallInteger('user_edit')->nullable();
-            $table->dateTime('updated_at', 6)->nullable();
+            $table->timestamps();
         });
     }
 

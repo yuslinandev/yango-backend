@@ -26,11 +26,10 @@ class CreateSaleOrderDetailsTable extends Migration
             $table->decimal('total_sale', 14, 4);
             $table->string('commentary', 100)->nullable();
             $table->integer('id_warehouse_reserve')->nullable();
-            $table->string('state', 5);
+            $table->string('state', 5)->default('A');
             $table->smallInteger('user_creation');
-            $table->dateTime('created_at', 6);
             $table->smallInteger('user_edit')->nullable();
-            $table->dateTime('updated_at', 6)->nullable();
+            $table->timestamps();
         });
     }
 

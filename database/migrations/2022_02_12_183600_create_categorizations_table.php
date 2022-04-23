@@ -17,11 +17,11 @@ class CreateCategorizationsTable extends Migration
             $table->integer('id_categorization', true);
             $table->string('name', 20);
             $table->string('description', 100)->nullable();
-            $table->string('state', 5);
+            $table->string('state', 5)->default('A');
             $table->string('user_creation', 50);
-            $table->dateTime('created_at', 6);
             $table->string('user_edit', 50)->nullable();
-            $table->dateTime('updated_at', 6)->nullable();
+            //$table->dateTime('updated_at', 6)->nullable();
+            $table->timestamps();
         });
     }
 

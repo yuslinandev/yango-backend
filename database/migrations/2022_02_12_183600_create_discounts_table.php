@@ -18,11 +18,10 @@ class CreateDiscountsTable extends Migration
             $table->string('name', 50);
             $table->string('discount_type', 5);
             $table->decimal('value', 14, 4);
-            $table->string('state', 5);
+            $table->string('state', 5)->default('A');
             $table->smallInteger('user_creation');
-            $table->dateTime('created_at', 6);
             $table->smallInteger('user_edit')->nullable();
-            $table->dateTime('updated_at', 6)->nullable();
+            $table->timestamps();
         });
     }
 

@@ -19,11 +19,10 @@ class CreatePersonEmployeesTable extends Migration
             $table->string('description', 50)->nullable();
             $table->string('names', 100);
             $table->string('last_names', 100)->nullable();
-            $table->string('state', 5);
+            $table->string('state', 5)->default('A');
             $table->smallInteger('user_creation');
-            $table->dateTime('created_at', 6);
             $table->smallInteger('user_edit')->nullable();
-            $table->dateTime('updated_at', 6)->nullable();
+            $table->timestamps();
         });
     }
 
