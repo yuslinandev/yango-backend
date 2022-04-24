@@ -15,12 +15,12 @@ class CreateMovementsTable extends Migration
     {
         Schema::create('movements', function (Blueprint $table) {
             $table->integer('id_movement', true);
-            $table->dateTime('date', 6);
+            $table->dateTime('date', 6)->nullable();
             $table->string('document_number', 20)->nullable();
             $table->string('document_type', 5)->nullable();
             $table->string('voucher_number', 20)->nullable();
             $table->string('voucher_type', 5)->nullable();
-            $table->boolean('id_movement_type');
+            $table->boolean('id_movement_type')->nullable();
             $table->smallInteger('id_local_origin')->nullable();
             $table->smallInteger('id_warehouse_origin')->nullable();
             $table->smallInteger('id_local_arrival')->nullable();
