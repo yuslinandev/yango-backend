@@ -16,7 +16,17 @@ Route::post('login', 'App\Http\Controllers\UserController@authenticate');
 Route::group(['middleware' => ['jwt.verify']], function() {
 
     Route::post('user','App\Http\Controllers\UserController@getAuthenticatedUser');
+
+    // Endpoints Brands
     Route::apiResource('v1/brand', App\Http\Controllers\Api\V1\BrandController::class)
     ->only(['index','show','destroy','store','update']);
+
+    // Endpoints Employees
+    Route::apiResource('v1/employee', App\Http\Controllers\Api\V1\EmployeeController::class)
+    ->only(['index']);
+
+    // Endpoints Movements
+    Route::apiResource('v1/movement', App\Http\Controllers\Api\V1\MovementController::class)
+    ->only(['store']);
 
 });
