@@ -17,10 +17,16 @@ class UserController extends Controller
             if (! $token = JWTAuth::attempt($credentials)) {
                 return response()->json(['error' => 'invalid_credentials'], 400);
             }
+            $user = JWTAuth::user();
         } catch (JWTException $e) {
             return response()->json(['error' => 'could_not_create_token'], 500);
         }
-        return response()->json(compact('token'));
+        //return response()->json(compact('token'));
+        return response()->json([
+            'user' => $user,
+            'accessToken' => $token,
+            'tokenType' => 'bearer',
+        ]);
     }
 
     public function getAuthenticatedUser()
