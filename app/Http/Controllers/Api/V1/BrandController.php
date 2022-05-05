@@ -11,6 +11,44 @@ use Symfony\Component\HttpFoundation\Response; // lista de codigos de estado
 class BrandController extends Controller
 {
     /**
+     * Display a listing custom of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function list(Request $request)
+    {
+        // Obtener data de la url, ej: http://127.0.0.1:8000/api/v1/brand_list?page=1&toShow=5&sort=ASC...
+        // $page = $request->input('page');
+        // $toShow = $request->input('toShow');
+        // $field = $request->input('field');
+        // $sort = $request->input('sort');
+        // $textSearch = $request->input('textSearch');
+
+        // dd es para que contiene variable, solo test
+        //dd($toShow);
+
+        // linea anterior
+        //return BrandResource::collection(Brand::latest()->paginate($toShow));
+
+        // Valores por defecto
+        $toShow = 5;
+        $field = 'name';
+        $textSearch = 'maxime';
+        if($textSearch != ""){
+            $brand = Brand::where( $field, 'LIKE', '%' . $textSearch . '%' )->paginate ($toShow);
+            $pagination = $brand->appends ( array (
+                $field => $textSearch
+             ) );
+            // if (count ( $brand ) > 0)
+            //  return $brand->withQuery ( $textSearch );
+        }
+        return response()->json([
+            'data' => $brand,
+            'pagination' => $pagination,
+        ],  Response::HTTP_OK);
+        
+    }
+    /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response

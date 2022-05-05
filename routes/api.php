@@ -21,6 +21,10 @@ Route::group(['middleware' => ['jwt.verify']], function() {
     Route::apiResource('v1/brand', App\Http\Controllers\Api\V1\BrandController::class)
     ->only(['index','show','destroy','store','update']);
 
+    // Endpoints Brands
+    Route::get('/v1/brand_list', [App\Http\Controllers\Api\V1\BrandController::class, 'list']);
+
+
     // Endpoints Employees
     Route::apiResource('v1/employee', App\Http\Controllers\Api\V1\EmployeeController::class)
     ->only(['index']);
