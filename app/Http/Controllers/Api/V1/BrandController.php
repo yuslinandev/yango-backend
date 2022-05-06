@@ -5,7 +5,7 @@ namespace App\Http\Controllers\Api\V1;
 use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use Illuminate\Http\Request;
-use App\Http\Resources\V1\BrandResource; // llamar al recurso
+use App\Http\Resources\V1\BrandCollection; // llamar al recurso
 use Symfony\Component\HttpFoundation\Response; // lista de codigos de estado
 
 class BrandController extends Controller
@@ -17,35 +17,26 @@ class BrandController extends Controller
      */
     public function list(Request $request)
     {
-        // Obtener data de la url, ej: http://127.0.0.1:8000/api/v1/brand_list?page=1&toShow=5&sort=ASC...
-        // $page = $request->input('page');
-        // $toShow = $request->input('toShow');
-        // $field = $request->input('field');
-        // $sort = $request->input('sort');
-        // $textSearch = $request->input('textSearch');
-
-        // dd es para que contiene variable, solo test
-        //dd($toShow);
-
-        // linea anterior
-        //return BrandResource::collection(Brand::latest()->paginate($toShow));
+        // Obtener data de la url, ej: 
+        http://127.0.0.1:8000/api/v1/brand_list?page=1&toShow=5&sortField=name&sort=DESC
 
         // Valores por defecto
-        $toShow = 5;
-        $field = 'name';
-        $textSearch = 'maxime';
-        if($textSearch != ""){
-            $brand = Brand::where( $field, 'LIKE', '%' . $textSearch . '%' )->paginate ($toShow);
-            $pagination = $brand->appends ( array (
-                $field => $textSearch
-             ) );
-            // if (count ( $brand ) > 0)
-            //  return $brand->withQuery ( $textSearch );
+        // page por default
+        $toShow =  $request->input('toShow') ?? 10;
+        $sortField = $request->input('sortField') ?? 'name';
+        $sort = $request->input('sort') ?? 'ASC';
+        $searchField = $request->input('searchField') ?? 'name';
+        $searchText = $request->input('searchText') ?? '';
+
+        if($searchText != ""){
+            $brand = Brand::where( $searchField, 'LIKE', '%' . $searchText . '%' )->orderBy($sortField, $sort)->paginate ($toShow);
+        }else{
+            $brand = Brand::orderBy($sortField, $sort)->paginate ($toShow);
         }
-        return response()->json([
-            'data' => $brand,
-            'pagination' => $pagination,
-        ],  Response::HTTP_OK);
+
+        return response()->json(
+            new BrandCollection( $brand )
+        , Response::HTTP_OK);
         
     }
     /**
