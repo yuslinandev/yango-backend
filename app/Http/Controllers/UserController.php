@@ -29,6 +29,12 @@ class UserController extends Controller
         ]);
     }
 
+    public function validateUserToken() {
+        return response()->json([
+            'valid' => true
+        ]);
+    }
+
     public function getAuthenticatedUser()
     {
         try {

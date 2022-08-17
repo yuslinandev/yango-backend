@@ -16,6 +16,7 @@ Route::post('login', 'App\Http\Controllers\UserController@authenticate');
 Route::group(['middleware' => ['jwt.verify']], function() {
 
     Route::get('user','App\Http\Controllers\UserController@getAuthenticatedUser');
+    Route::get('validate','App\Http\Controllers\UserController@validateUserToken');
 
     // Endpoints Brands
     Route::apiResource('v1/brand', App\Http\Controllers\Api\V1\BrandController::class)
@@ -23,6 +24,9 @@ Route::group(['middleware' => ['jwt.verify']], function() {
 
     // Endpoints Brands
     Route::get('/v1/brand_list', [App\Http\Controllers\Api\V1\BrandController::class, 'list']);
+    Route::post('/v1/brand_store', [App\Http\Controllers\Api\V1\BrandController::class, 'store']);
+    Route::patch('/v1/brand_update', [App\Http\Controllers\Api\V1\BrandController::class, 'update']);
+    Route::delete('/v1/brand_delete/{id}', [App\Http\Controllers\Api\V1\BrandController::class, 'delete']);
 
 
     // Endpoints Employees

@@ -22,16 +22,18 @@ class BrandController extends Controller
 
         // Valores por defecto
         // page por default
-        $toShow =  $request->input('toShow') ?? 10;
-        $sortField = $request->input('sortField') ?? 'name';
-        $sort = $request->input('sort') ?? 'ASC';
+        $size =  $request->input('size') ?? 10;
+        $orderField = $request->input('orderField') ?? 'name';
+        $order = $request->input('order') ?? 'asc';
         $searchField = $request->input('searchField') ?? 'name';
-        $searchText = $request->input('searchText') ?? '';
+        $search = $request->input('search') ?? '';
 
-        if($searchText != ""){
-            $brand = Brand::where( $searchField, 'LIKE', '%' . $searchText . '%' )->orderBy($sortField, $sort)->paginate ($toShow);
+        if($search != ""){
+            $brand = Brand::where( 'name', 'LIKE', '%' . $search . '%' )
+                ->orwhere( 'description', 'LIKE', '%' . $search . '%' )
+                ->where('state', '<>', 'E')->orderBy($orderField, $order)->paginate ($size);
         }else{
-            $brand = Brand::orderBy($sortField, $sort)->paginate ($toShow);
+            $brand = Brand::where('state', '<>', 'E')->orderBy($orderField, $order)->paginate ($size);
         }
 
         return response()->json(
@@ -69,14 +71,11 @@ class BrandController extends Controller
             'user_creation' => auth()->user()->id
         ]);
 
-        /*$brand = new Brand;
-        $brand->name = $request->name;
-        $brand->description = $request->description;
-        $brand->user_creation = auth()->user()->id;
-        $brand->save();*/
+        $brandInserted = Brand::find($brand->id_brand, ['id_brand AS id','name', 'description','state']);
 
         return response()->json([
-            'message' => 'Brand Add'
+            'message' => 'Brand Add',
+            'data' => $brandInserted
         ], Response::HTTP_OK);
     }
 
@@ -105,8 +104,10 @@ class BrandController extends Controller
      * @param  \App\Models\Brand  $brand
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Brand $brand)
+    public function update(Request $request)
     {
+        $id = $request->id;
+
         $this->validateBrand($request);
 
         //dd($request->all());
@@ -114,15 +115,18 @@ class BrandController extends Controller
         // $brand->update( $request->all() ); Captura y guarda todos valores enviados desde el front
 
         // Aqui podemos personalizar los valore a guardar
-        $brand = Brand::findOrFail($brand->id)->update([
+        $brand = Brand::findOrFail($id)->update([
             'name' => $request->name,
             'description' => $request->description,
             'user_edit' => auth()->user()->id,
             'state' => $request->state ? $request->state : "A"
         ]);
 
+        $brandUpdated = Brand::find($id, ['id_brand AS id','name', 'description','state']);
+
         return response()->json([
-            'message' => 'Brand Update'
+            'message' => 'Brand Update',
+            'data' => $brandUpdated
         ], Response::HTTP_OK);
         
     }
@@ -138,7 +142,23 @@ class BrandController extends Controller
         $brand->delete();
 
         return response()->json([
-            'message' => 'Brand Deleted'
+            'message' => 'Brand Destroyed'
         ], Response::HTTP_ACCEPTED); // de la clase de codigos de estado
+    }
+
+    /**
+     * Logical delete register
+     *
+     */
+    public function delete($id)
+    {
+        Brand::findOrFail($id)->update([
+            'state' => "E"
+        ]);
+
+        return response()->json([
+            'message' => 'Brand Deleted',
+            'data' => 'true'
+        ], Response::HTTP_ACCEPTED);
     }
 }
