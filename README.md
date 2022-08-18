@@ -7,9 +7,9 @@ Para configurar el entorno
     - https://getcomposer.org/download/
 3. Instalar Laravel
     - composer global require laravel/installer
-5. Instalar las dependencias del proyecto
+5. En el directorio del proyecto, instalar sus dependencias
     - composer install
-6. Instalar las llaves
+6. En el directorio del proyecto, instalar las llaves
     - php artisan key:generate 
     - php artisan jwt:secret 
     - php artisan cache:clear 
