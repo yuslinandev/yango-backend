@@ -3,12 +3,12 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
+use App\Models\Categorization;
 use Illuminate\Http\Request;
-use App\Http\Resources\V1\BrandCollection; // llamar al recurso
+use App\Http\Resources\V1\CategorizationCollection; // llamar al recurso
 use Symfony\Component\HttpFoundation\Response; // lista de codigos de estado
 
-class BrandController extends Controller
+class CategorizationController extends Controller
 {
     /**
      * Display a listing custom of the resource.
@@ -18,7 +18,7 @@ class BrandController extends Controller
     public function list(Request $request)
     {
         // Obtener data de la url, ej:
-        http://127.0.0.1:8000/api/v1/brand_list?page=1&toShow=5&sortField=name&sort=DESC
+        http://127.0.0.1:8000/api/v1/categorization_list?page=1&toShow=5&sortField=name&sort=DESC
 
         // Valores por defecto
         // page por default
@@ -29,15 +29,15 @@ class BrandController extends Controller
         $search = $request->input('search') ?? '';
 
         if($search != ""){
-            $brand = Brand::where( 'name', 'LIKE', '%' . $search . '%' )
+            $categorization = Categorization::where( 'name', 'LIKE', '%' . $search . '%' )
                 ->orwhere( 'description', 'LIKE', '%' . $search . '%' )
                 ->where('state', '<>', 'E')->orderBy($orderField, $order)->paginate ($size);
         }else{
-            $brand = Brand::where('state', '<>', 'E')->orderBy($orderField, $order)->paginate ($size);
+            $categorization = Categorization::where('state', '<>', 'E')->orderBy($orderField, $order)->paginate ($size);
         }
 
         return response()->json(
-            new BrandCollection( $brand )
+            new CategorizationCollection( $categorization )
         , Response::HTTP_OK);
 
     }
@@ -49,8 +49,8 @@ class BrandController extends Controller
     public function index()
     {
         // Para cambiar los datos a mostrar en la coleccion,
-        // ver archivo de BrandResource
-        return BrandResource::collection(Brand::latest()->paginate());
+        // ver archivo de CategorizationResource
+        return CategorizationResource::collection(Categorization::latest()->paginate());
     }
 
     /**
@@ -61,26 +61,25 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validateBrand($request);
+        $this->validateCategorization($request);
 
         //dd($request->all());
 
-        $brand = Brand::create([
+        $categorization = Categorization::create([
             'name' => $request->name,
             'description' => $request->description,
-            'state' => $request->state,
             'user_creation' => auth()->user()->id
         ]);
 
-        $brandInserted = Brand::find($brand->id_brand, ['id_brand AS id','name', 'description','state']);
+        $categorizationInserted = Categorization::find($categorization->id_categorization, ['id_categorization AS id','name', 'description','state']);
 
         return response()->json([
-            'message' => 'Brand Add',
-            'data' => $brandInserted
+            'message' => 'Categorization Add',
+            'data' => $categorizationInserted
         ], Response::HTTP_OK);
     }
 
-    public function validateBrand(Request $request)
+    public function validateCategorization(Request $request)
     {
         return $request->validate([
             'name' => 'required'
@@ -90,50 +89,52 @@ class BrandController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Brand  $brand
+     * @param  \App\Models\Categorization  $categorization
      * @return \Illuminate\Http\Response
      */
-    public function show(Brand $brand)
+    public function show(Categorization $categorization)
     {
-        return new BrandResource($brand);
+        return new CategorizationResource($categorization);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Brand  $brand
+     * @param  \App\Models\Categorization  $categorization
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
         $id = $request->id;
 
-        $this->validateBrand($request);
+        $this->validateCategorization($request);
 
         //dd($request->all());
-        // $brand->update( $request->all() ); Captura y guarda todos valores enviados desde el front
+
+        // $categorization->update( $request->all() ); Captura y guarda todos valores enviados desde el front
 
         // Aqui podemos personalizar los valore a guardar
-        $state = $request->state;
-        if (strval($state) ==  true ) {
-              $state = "A" ;
-        } else
-        {
-             $state = "E" ;
-        }
-        $brand = Brand::findOrFail($id)->update([
+                $state = $request->state;
+                if (strval($state) ==  true ) {
+                      $state = "A" ;
+                } else
+                {
+                     $state = "E" ;
+                }
+
+        $categorization = Categorization::findOrFail($id)->update([
             'name' => $request->name,
             'description' => $request->description,
             'user_edit' => auth()->user()->id,
             'state' => $state
         ]);
 
-        $brandUpdated = Brand::find($id, ['id_brand AS id','name', 'description','state']);
+        $categorizationUpdated = Categorization::find($id, ['id_categorization AS id','name', 'description','state']);
 
         return response()->json([
-            'message' => 'Brand Update',
-            'data' => $brandUpdated
+            'message' => 'Categorization Update',
+            'data' => $categorizationUpdated
         ], Response::HTTP_OK);
 
     }
@@ -141,15 +142,15 @@ class BrandController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Brand  $brand
+     * @param  \App\Models\Categorization  $categorization
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Brand $brand)
+    public function destroy(Categorization $categorization)
     {
-        $brand->delete();
+        $categorization->delete();
 
         return response()->json([
-            'message' => 'Brand Destroyed'
+            'message' => 'Categorization Destroyed'
         ], Response::HTTP_ACCEPTED); // de la clase de codigos de estado
     }
 
@@ -159,12 +160,12 @@ class BrandController extends Controller
      */
     public function delete($id)
     {
-        Brand::findOrFail($id)->update([
+        Categorization::findOrFail($id)->update([
             'state' => "E"
         ]);
 
         return response()->json([
-            'message' => 'Brand Deleted',
+            'message' => 'Categorization Deleted',
             'data' => 'true'
         ], Response::HTTP_ACCEPTED);
     }

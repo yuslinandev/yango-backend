@@ -5,12 +5,12 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Brand extends Model
+class Categorization extends Model
 {
     use HasFactory;
 
-    // Estableciendo campo default id por uno personalizado: id_brand
-    protected $primaryKey = 'id_brand';
+    // Estableciendo campo default id por uno personalizado: id_unit
+    protected $primaryKey = 'id_categorization';
 
     protected $fillable = [
         'name',
