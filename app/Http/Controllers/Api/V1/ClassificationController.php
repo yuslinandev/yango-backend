@@ -3,13 +3,12 @@
 namespace App\Http\Controllers\Api\V1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Brand;
+use App\Models\Classification;
 use Illuminate\Http\Request;
-use App\Http\Resources\V1\BrandCollection; // llamar al recurso
-use App\Http\Resources\V1\BrandResource;
+use App\Http\Resources\V1\ClassificationCollection; // llamar al recurso
 use Symfony\Component\HttpFoundation\Response; // lista de codigos de estado
 
-class BrandController extends Controller
+class ClassificationController extends Controller
 {
     /**
      * Display a listing custom of the resource.
@@ -19,7 +18,7 @@ class BrandController extends Controller
     public function list(Request $request)
     {
         // Obtener data de la url, ej:
-        http://127.0.0.1:8000/api/v1/brand_list?page=1&toShow=5&sortField=name&sort=DESC
+        http://127.0.0.1:8000/api/v1/classification_list?page=1&toShow=5&sortField=name&sort=DESC
 
         // Valores por defecto
         // page por default
@@ -30,27 +29,27 @@ class BrandController extends Controller
         $search = $request->input('search') ?? '';
 
         if($search != ""){
-            $brand = Brand::where( 'name', 'LIKE', '%' . $search . '%' )
+            $classification = Classification::where( 'name', 'LIKE', '%' . $search . '%' )
                 ->orwhere( 'description', 'LIKE', '%' . $search . '%' )
                 ->where('state', '<>', 'E')->orderBy($orderField, $order)->paginate ($size);
         }else{
-            $brand = Brand::where('state', '<>', 'E')->orderBy($orderField, $order)->paginate ($size);
-
+            $classification = Classification::where('state', '<>', 'E')->orderBy($orderField, $order)->paginate ($size);
         }
 
         return response()->json(
-            new BrandCollection( $brand )
+            new ClassificationCollection( $classification )
         , Response::HTTP_OK);
 
     }
 
+
     public function listAll()
         {
-                $brand = Brand::where('state', '<>', 'E')->get();
+                $classification = Classification::where('state', '<>', 'E')->get();
 
 
             return response()->json(
-                $brand
+                $classification
             , Response::HTTP_OK);
 
         }
@@ -63,8 +62,8 @@ class BrandController extends Controller
     public function index()
     {
         // Para cambiar los datos a mostrar en la coleccion,
-        // ver archivo de BrandResource
-        return BrandResource::collection(Brand::latest()->paginate());
+        // ver archivo de ClassificationResource
+        return ClassificationResource::collection(Classification::latest()->paginate());
     }
 
     /**
@@ -75,26 +74,27 @@ class BrandController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validateBrand($request);
+        $this->validateClassification($request);
 
         //dd($request->all());
 
-        $brand = Brand::create([
+        $classification = Classification::create([
             'name' => $request->name,
             'description' => $request->description,
+            'parent_id' => $request->parent_id,
             'state' => $request->state,
             'user_creation' => auth()->user()->id
         ]);
 
-        $brandInserted = Brand::find($brand->id_brand, ['id_brand AS id','name', 'description','state']);
+        $classificationInserted = Classification::find($classification->id_classification, ['id_classification AS id','name', 'description','state']);
 
         return response()->json([
-            'message' => 'Brand Add',
-            'data' => $brandInserted
+            'message' => 'Classification Add',
+            'data' => $classificationInserted
         ], Response::HTTP_OK);
     }
 
-    public function validateBrand(Request $request)
+    public function validateClassification(Request $request)
     {
         return $request->validate([
             'name' => 'required'
@@ -104,50 +104,51 @@ class BrandController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Models\Brand  $brand
+     * @param  \App\Models\Classification  $classification
      * @return \Illuminate\Http\Response
      */
-    public function show(Brand $brand)
+    public function show(Classification $classification)
     {
-        return new BrandResource($brand);
+        return new ClassificationResource($classification);
     }
 
     /**
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Models\Brand  $brand
+     * @param  \App\Models\Classification  $classification
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request)
     {
         $id = $request->id;
 
-        $this->validateBrand($request);
+        $this->validateClassification($request);
 
         //dd($request->all());
-        // $brand->update( $request->all() ); Captura y guarda todos valores enviados desde el front
 
-        // Aqui podemos personalizar los valore a guardar
+        // $classification->update( $request->all() ); Captura y guarda todos valores enviados desde el front
+
         $state = $request->state;
         if (strval($state) ==  true ) {
               $state = "A" ;
         } else
         {
-             $state = "I" ;
+             $state = "E" ;
         }
-        $brand = Brand::findOrFail($id)->update([
+        // Aqui podemos personalizar los valore a guardar
+        $classification = Classification::findOrFail($id)->update([
             'name' => $request->name,
             'description' => $request->description,
             'user_edit' => auth()->user()->id,
             'state' => $state
         ]);
 
-        $brandUpdated = Brand::find($id, ['id_brand AS id','name', 'description','state']);
+        $classificationUpdated = Classification::find($id, ['id_classification AS id','name', 'description','state']);
 
         return response()->json([
-            'message' => 'Brand Update',
-            'data' => $brandUpdated
+            'message' => 'Classification Update',
+            'data' => $classificationUpdated
         ], Response::HTTP_OK);
 
     }
@@ -155,15 +156,15 @@ class BrandController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Models\Brand  $brand
+     * @param  \App\Models\Classification  $classification
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Brand $brand)
+    public function destroy(Classification $classification)
     {
-        $brand->delete();
+        $classification->delete();
 
         return response()->json([
-            'message' => 'Brand Destroyed'
+            'message' => 'Classification Destroyed'
         ], Response::HTTP_ACCEPTED); // de la clase de codigos de estado
     }
 
@@ -173,12 +174,12 @@ class BrandController extends Controller
      */
     public function delete($id)
     {
-        Brand::findOrFail($id)->update([
+        Classification::findOrFail($id)->update([
             'state' => "E"
         ]);
 
         return response()->json([
-            'message' => 'Brand Deleted',
+            'message' => 'Classification Deleted',
             'data' => 'true'
         ], Response::HTTP_ACCEPTED);
     }
