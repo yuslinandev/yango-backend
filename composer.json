@@ -14,7 +14,6 @@
         "tymon/jwt-auth": "dev-develop"
     },
     "require-dev": {
-        "barryvdh/laravel-debugbar": "^3.7",
         "facade/ignition": "^2.5",
         "fakerphp/faker": "^1.9.1",
         "kitloong/laravel-migrations-generator": "^5.1",
