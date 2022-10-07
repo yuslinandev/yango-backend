@@ -133,7 +133,7 @@ class CategorizationController extends Controller
                       $state = "A" ;
                 } else
                 {
-                     $state = "E" ;
+                     $state = "I" ;
                 }
 
         $categorization = Categorization::findOrFail($id)->update([

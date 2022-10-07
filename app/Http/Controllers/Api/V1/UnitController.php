@@ -137,7 +137,7 @@ class UnitController extends Controller
                       $state = "A" ;
                 } else
                 {
-                     $state = "E" ;
+                     $state = "I" ;
                 }
 
         $unit = Unit::findOrFail($id)->update([

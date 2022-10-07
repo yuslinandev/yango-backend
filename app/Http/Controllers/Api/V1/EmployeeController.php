@@ -148,7 +148,7 @@ class EmployeeController extends Controller
                       $state = "A" ;
                 } else
                 {
-                     $state = "E" ;
+                     $state = "I" ;
                 }
 
         $employee = Employees::findOrFail($id)->update([

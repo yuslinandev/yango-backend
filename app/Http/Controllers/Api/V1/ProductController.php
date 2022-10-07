@@ -156,7 +156,7 @@ $productInserted = Product::select('products.*')
                       $state = "A" ;
                 } else
                 {
-                     $state = "E" ;
+                     $state = "I" ;
                 }
 
         $product = Product::findOrFail($id)->update([

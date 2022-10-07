@@ -122,7 +122,7 @@ class JobController extends Controller
                       $state = "A" ;
                 } else
                 {
-                     $state = "E" ;
+                     $state = "I" ;
                 }
 
         $job = Employee_jobs::findOrFail($id)->update([

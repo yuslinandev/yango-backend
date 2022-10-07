@@ -144,7 +144,7 @@ class LocalController extends Controller
                       $state = "A" ;
                 } else
                 {
-                     $state = "E" ;
+                     $state = "I" ;
                 }
 
         $local = Local::findOrFail($id)->update([

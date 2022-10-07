@@ -134,7 +134,7 @@ class ClassificationController extends Controller
               $state = "A" ;
         } else
         {
-             $state = "E" ;
+             $state = "I" ;
         }
         // Aqui podemos personalizar los valore a guardar
         $classification = Classification::findOrFail($id)->update([

@@ -160,7 +160,7 @@ class ConfigsController extends Controller
               $state = "A" ;
         } else
         {
-             $state = "E" ;
+             $state = "I" ;
         }
         $configs = Configs::findOrFail($id)->update([
             'id_config' => $request->id_config,

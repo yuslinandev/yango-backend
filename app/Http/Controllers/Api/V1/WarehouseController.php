@@ -71,7 +71,7 @@ class WarehouseController extends Controller
                       $state = "A" ;
                 } else
                 {
-                     $state = "E" ;
+                     $state = "I" ;
                 }
 
         $warehouse = Warehouse::create([
@@ -136,7 +136,7 @@ class WarehouseController extends Controller
                       $state = "A" ;
                 } else
                 {
-                     $state = "E" ;
+                     $state = "I" ;
                 }
 
         $warehouse = Warehouse::findOrFail($id)->update([

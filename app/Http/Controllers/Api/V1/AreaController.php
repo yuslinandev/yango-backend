@@ -121,7 +121,7 @@ class AreaController extends Controller
                       $state = "A" ;
                 } else
                 {
-                     $state = "E" ;
+                     $state = "I" ;
                 }
 
         $area = Employee_areas::findOrFail($id)->update([

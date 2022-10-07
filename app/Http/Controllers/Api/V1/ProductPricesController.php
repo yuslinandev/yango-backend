@@ -217,7 +217,7 @@ public function listByLocalAndProduct(Request $request)
               $state = "A" ;
         } else
         {
-             $state = "E" ;
+             $state = "I" ;
         }
         $productPrice = Product_prices::findOrFail($id)->update([
 
