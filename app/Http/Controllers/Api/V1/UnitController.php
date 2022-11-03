@@ -41,6 +41,21 @@ class UnitController extends Controller
         , Response::HTTP_OK);
 
     }
+
+
+
+
+        public function listAll()
+            {
+                    $unit = Unit::where('state', '=', 'A')->get();
+
+
+                return response()->json(
+                    $unit
+                , Response::HTTP_OK);
+
+            }
+
     /**
      * Display a listing of the resource.
      *
@@ -69,6 +84,7 @@ class UnitController extends Controller
             'name' => $request->name,
             'type' => $request->type,
             'abbreviation' => $request -> abbreviation,
+            'state' => $request->state,
             'user_creation' => auth()->user()->id
         ]);
 
@@ -121,7 +137,7 @@ class UnitController extends Controller
                       $state = "A" ;
                 } else
                 {
-                     $state = "E" ;
+                     $state = "I" ;
                 }
 
         $unit = Unit::findOrFail($id)->update([

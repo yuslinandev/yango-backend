@@ -1,21 +1,5 @@
 # yango-backend
-
 API yango app usando JWT 
-
-Para configurar el entorno
-1. Instalar Composer
-    - https://getcomposer.org/download/
-3. Instalar Laravel
-    - composer global require laravel/installer
-5. En el directorio del proyecto, instalar sus dependencias
-    - composer install
-6. En el directorio del proyecto, instalar las llaves
-    - php artisan key:generate 
-    - php artisan jwt:secret 
-    - php artisan cache:clear 
-    - php artisan config:clear
-8. Iniciar el proyecto
-    - php artisan serve
 
 A probar nuestra api en postman o insomnia. 
 

@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Brand;
 use Illuminate\Http\Request;
 use App\Http\Resources\V1\BrandCollection; // llamar al recurso
+use App\Http\Resources\V1\BrandResource;
 use Symfony\Component\HttpFoundation\Response; // lista de codigos de estado
 
 class BrandController extends Controller
@@ -34,6 +35,7 @@ class BrandController extends Controller
                 ->where('state', '<>', 'E')->orderBy($orderField, $order)->paginate ($size);
         }else{
             $brand = Brand::where('state', '<>', 'E')->orderBy($orderField, $order)->paginate ($size);
+
         }
 
         return response()->json(
@@ -41,6 +43,18 @@ class BrandController extends Controller
         , Response::HTTP_OK);
 
     }
+
+    public function listAll()
+        {
+                $brand = Brand::where('state', '<>', 'E')->get();
+
+
+            return response()->json(
+                $brand
+            , Response::HTTP_OK);
+
+        }
+
     /**
      * Display a listing of the resource.
      *
@@ -120,7 +134,7 @@ class BrandController extends Controller
               $state = "A" ;
         } else
         {
-             $state = "E" ;
+             $state = "I" ;
         }
         $brand = Brand::findOrFail($id)->update([
             'name' => $request->name,

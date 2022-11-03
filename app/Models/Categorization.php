@@ -9,6 +9,12 @@ class Categorization extends Model
 {
     use HasFactory;
 
+ public function products()
+
+    {
+        return $this->hasMany('App\Models\Product', 'id_categorization', 'id_categorization');
+    }
+
     // Estableciendo campo default id por uno personalizado: id_unit
     protected $primaryKey = 'id_categorization';
 

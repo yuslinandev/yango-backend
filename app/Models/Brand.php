@@ -9,6 +9,12 @@ class Brand extends Model
 {
     use HasFactory;
 
+ public function products()
+
+    {
+        return $this->hasMany('App\Models\Product', 'id_brand', 'id_brand');
+    }
+
     // Estableciendo campo default id por uno personalizado: id_brand
     protected $primaryKey = 'id_brand';
 

@@ -41,6 +41,19 @@ class ClassificationController extends Controller
         , Response::HTTP_OK);
 
     }
+
+
+    public function listAll()
+        {
+                $classification = Classification::where('state', '<>', 'E')->get();
+
+
+            return response()->json(
+                $classification
+            , Response::HTTP_OK);
+
+        }
+
     /**
      * Display a listing of the resource.
      *
@@ -69,6 +82,7 @@ class ClassificationController extends Controller
             'name' => $request->name,
             'description' => $request->description,
             'parent_id' => $request->parent_id,
+            'state' => $request->state,
             'user_creation' => auth()->user()->id
         ]);
 
@@ -120,7 +134,7 @@ class ClassificationController extends Controller
               $state = "A" ;
         } else
         {
-             $state = "E" ;
+             $state = "I" ;
         }
         // Aqui podemos personalizar los valore a guardar
         $classification = Classification::findOrFail($id)->update([
