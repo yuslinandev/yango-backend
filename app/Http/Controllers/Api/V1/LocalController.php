@@ -30,6 +30,9 @@ class LocalController extends Controller
 
         if($search != ""){
             $local = Local::where( 'long_name', 'LIKE', '%' . $search . '%' )
+                ->orwhere( 'internal_code', 'LIKE', '%' . $search . '%' )
+                ->orwhere( 'short_name', 'LIKE', '%' . $search . '%' )
+                ->orwhere( 'description', 'LIKE', '%' . $search . '%' )
                 ->orwhere( 'type', 'LIKE', '%' . $search . '%' )
                 ->where('state', '<>', 'E')->orderBy($orderField, $order)->paginate ($size);
         }else{
@@ -92,7 +95,7 @@ class LocalController extends Controller
         'user_creation' => auth()->user()->id
         ]);
 
-        $localInserted = Local::find($local->id_local, ['id_local AS id','short_name',  'type', 'abbreviation','state']);
+        $localInserted = Local::find($local->id_local, ['id_local AS id', 'internal_code', 'long_name',   'type', 'state']);
 
         return response()->json([
             'message' => 'Local Add',
@@ -162,7 +165,7 @@ class LocalController extends Controller
                     'user_edit' => auth()->user()->id,
         ]);
 
-        $localUpdated = Local::find($id, ['id_local AS id','long_name', 'type','state']);
+        $localUpdated = Local::find($id, ['id_local AS id','internal_code','long_name', 'type','state']);
 
         return response()->json([
             'message' => 'Local Update',

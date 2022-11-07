@@ -66,19 +66,19 @@ class EmployeeController extends Controller
         //dd($request->all());
 
         $employee = Employees::create([
-            'id_employee' => $this->id_employee,
-            'document_number' => $this->document_number,
-            'document_type'=> $this->document_type,
-            'names'=> $this->names,
-             'last_name_1'=> $this->last_name_1,
-             'last_name_2'=> $this->last_name_2,
-             'address'=> $this->address,
-             'id_ubigeo'=> $this->id_ubigeo,
-             'id_employee_area'=> $this->id_employee_area,
-             'id_employee_job'=> $this->id_employee_job,
-             'id_warehouse_assigned' => $this->id_warehouse_assigned,
-             'id_local_assigned'=> $this->id_local_assigned,
-             'state' => $this->state,
+            'id_employee' => $request->id_employee,
+            'document_number' => $request->document_number,
+            'document_type'=> $request->document_type,
+            'names'=> $request->names,
+             'last_name_1'=> $request->last_name_1,
+             'last_name_2'=> $request->last_name_2,
+             'address'=> $request->address,
+             'id_ubigeo'=> $request->id_ubigeo,
+             'id_employee_area'=> $request->id_employee_area,
+             'id_employee_job'=> $request->id_employee_job,
+             'id_warehouse_assigned' => $request->id_warehouse_assigned,
+             'id_local_assigned'=> $request->id_local_assigned,
+             'state' => $request->state,
             'user_creation' => auth()->user()->id
 
         ]);

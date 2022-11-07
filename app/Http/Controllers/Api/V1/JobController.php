@@ -30,7 +30,6 @@ class JobController extends Controller
 
         if($search != ""){
             $job = Employee_jobs::where( 'name', 'LIKE', '%' . $search . '%' )
-                ->orwhere( 'type', 'LIKE', '%' . $search . '%' )
                 ->where('state', '<>', 'E')->orderBy($orderField, $order)->paginate ($size);
         }else{
             $job = Employee_jobs::where('state', '<>', 'E')->orderBy($orderField, $order)->paginate ($size);
@@ -73,7 +72,7 @@ class JobController extends Controller
             'user_creation' => auth()->user()->id
         ]);
 
-        $jobInserted = Employee_jobs::find($job->id_job, ['id_employee_job AS id','name',  'description','state']);
+        $jobInserted = Employee_jobs::find($job->id_employee_job, ['id_employee_job AS id','name',  'description','state']);
 
         return response()->json([
             'message' => 'Job Add',

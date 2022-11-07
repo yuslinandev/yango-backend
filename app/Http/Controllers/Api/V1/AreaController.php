@@ -72,7 +72,7 @@ class AreaController extends Controller
             'user_creation' => auth()->user()->id
         ]);
 
-        $areaInserted = Employee_areas::find($area->id_area, ['id_employee_area AS id','name', 'description','state']);
+        $areaInserted = Employee_areas::find($area->id_employee_area, ['id_employee_area AS id','name', 'description','state']);
 
         return response()->json([
             'message' => 'Area Add',
